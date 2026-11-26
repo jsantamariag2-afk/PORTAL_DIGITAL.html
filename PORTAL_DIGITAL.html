@@ -1,0 +1,1697 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="artifact-type" content="narrative">
+  <meta name="design-style" content="terracotta">
+  <title>Patrimonio Cultural y Desarrollo Local — Provincia del Guayas</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+
+      /* Page and surfaces (Terracotta) */
+      --background: #f9f3eb;
+      --surface-container-low: #f3e9dc;
+      --surface-container: #ede0d0;
+      --surface-container-high: #e4d4c0;
+
+      /* Ink */
+      --on-surface: #261b15;
+      --on-surface-variant: #57483f;
+
+      /* Borders */
+      --outline: #9e8a78;
+      --outline-variant: #dfd0be;
+      --outline-featured: #c98a6b;
+      --outline-emerald: #b5d6c9;
+      --outline-button: #c4b29e;
+
+      /* Accents */
+      --primary: #b84a24;
+      --primary-hover: #9e3d1c;
+      --on-primary: #ffffff;
+      --primary-container: #f7ebe0;
+      --on-primary-container: #7d2e12;
+      --secondary: #8f6524;
+      --tertiary: #1d6356;
+      --tertiary-container: #e1efe9;
+      --on-tertiary-container: #13473d;
+      --error: #b82929;
+      --on-error: #ffffff;
+
+      /* Cartographic & schematic surface tones */
+      --map-water: #d7e5e0;
+      --map-water-stroke: #9ab9b0;
+      --map-land-agro: #efe1cd;
+      --map-land-port: #f6e7d8;
+      --map-land-coast: #e4ede8;
+      --wood-balsa: #d9bd96;
+      --wood-balsa-stroke: #8f6524;
+      --sail-cloth: #fbf6ee;
+
+      /* Data series */
+      --data-1: #b84a24;
+      --data-2: #1d6356;
+      --data-3: #b5893e;
+      --data-4: #8c3838;
+      --data-context: #a39384;
+
+      /* Fonts */
+      --font-headline: 'Cormorant Garamond', serif;
+      --font-body: 'Plus Jakarta Sans', sans-serif;
+      --font-label: 'Plus Jakarta Sans', sans-serif;
+
+      /* Shape */
+      --rounded: 0.375rem;
+      --rounded-lg: 0.75rem;
+      --rounded-arch: 28px 28px 6px 6px;
+      --rounded-full: 9999px;
+
+      /* Style effects */
+      --soft-shadow: 0 4px 18px rgb(38 27 21 / 0.04);
+      --soft-shadow-raised: 0 8px 28px rgb(38 27 21 / 0.07);
+      --warm-hairline: 1px solid var(--outline-variant);
+      --brass-gradient: linear-gradient(90deg, #d8c3b0, #b5893e, #d8c3b0);
+      --focus-ring: 0 0 0 3px rgb(184 74 36 / 0.22);
+
+      /* Shared semantic tokens */
+      --positive: var(--tertiary);
+      --warning: var(--secondary);
+      --focus: var(--primary);
+
+      /* Type scale (Narrative, stepped for Cormorant Garamond) */
+      --display-size: clamp(2.5rem, 1.5rem + 4vw, 4.15rem);
+      --headline-size: clamp(1.875rem, 1.3rem + 2vw, 2.75rem);
+      --subhead-size: clamp(1.25rem, 1.1rem + 0.55vw, 1.5625rem);
+      --body-size: clamp(1.0625rem, 1rem + 0.2vw, 1.125rem);
+      --label-size: clamp(0.75rem, 0.72rem + 0.12vw, 0.8125rem);
+
+      /* Spacing scale (4pt base) */
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2.5rem;
+      --space-2xl: 4rem;
+      --space-3xl: 5.5rem;
+
+      /* Motion */
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+      --dur-micro: 120ms;
+      --dur-short: 220ms;
+      --dur-long: 420ms;
+    }
+
+    /* Base reset */
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body {
+      overflow-x: clip;
+      margin: 0;
+      padding: 0;
+      background-color: var(--background);
+      color: var(--on-surface);
+      font-family: var(--font-body);
+      font-size: var(--body-size);
+      line-height: 1.65;
+      scroll-behavior: smooth;
+    }
+    header { position: static !important; }
+
+    .page-grid {
+      display: grid;
+      gap: var(--space-lg);
+      padding: var(--space-lg);
+      max-width: 1160px;
+      margin: 0 auto;
+      overflow: hidden;
+    }
+    .page-grid * { min-width: 0; }
+
+    /* Focus rings */
+    :focus-visible {
+      outline: 2px solid var(--focus);
+      outline-offset: 2px;
+    }
+
+    /* Masthead navigation */
+    .masthead {
+      border-bottom: var(--warm-hairline);
+      background-color: var(--background);
+    }
+    .masthead-inner {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: var(--space-md) var(--space-lg);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-md);
+    }
+    .masthead-brand {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--primary);
+    }
+    .masthead-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+    }
+    .nav-anchor {
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+      padding: var(--space-xs) var(--space-md);
+      border-radius: var(--rounded-full);
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      color: var(--on-surface-variant);
+      text-decoration: none;
+      transition: background-color var(--dur-short) var(--ease-out), color var(--dur-short) var(--ease-out);
+    }
+    .nav-anchor:hover {
+      background-color: var(--surface-container-low);
+      color: var(--on-surface);
+    }
+    .nav-anchor:active {
+      background-color: var(--surface-container);
+    }
+
+    /* Typography */
+    .kicker-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--space-sm);
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--primary);
+    }
+    .kicker-meta {
+      color: var(--secondary);
+    }
+    .title {
+      font-family: var(--font-headline);
+      font-weight: 600;
+      font-size: var(--display-size);
+      line-height: 1.05;
+      letter-spacing: -0.01em;
+      color: var(--on-surface);
+      margin: var(--space-md) 0 var(--space-md);
+      max-width: 18ch;
+    }
+    .title em,
+    .section-heading em {
+      font-style: italic;
+      color: var(--primary);
+    }
+    .section-heading {
+      font-family: var(--font-headline);
+      font-weight: 600;
+      font-size: var(--headline-size);
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+      color: var(--on-surface);
+      margin: var(--space-xs) 0 var(--space-md);
+      max-width: 24ch;
+    }
+    .subhead {
+      font-family: var(--font-headline);
+      font-weight: 600;
+      font-size: var(--subhead-size);
+      line-height: 1.2;
+      color: var(--on-surface);
+      margin: 0 0 var(--space-sm);
+    }
+    .prose {
+      max-width: 65ch;
+      color: var(--on-surface);
+      margin: 0 0 var(--space-md);
+    }
+    .prose-muted {
+      max-width: 65ch;
+      color: var(--on-surface-variant);
+      margin: 0 0 var(--space-md);
+    }
+
+    /* Ornamental rule */
+    .ornament-rule {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      margin-block: var(--space-lg);
+      color: var(--secondary);
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      text-align: center;
+    }
+    .ornament-rule::before,
+    .ornament-rule::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--brass-gradient);
+    }
+
+    /* Badges */
+    .badge-emerald {
+      display: inline-flex;
+      align-items: center;
+      background: var(--tertiary-container);
+      color: var(--on-tertiary-container);
+      border: 1px solid var(--outline-emerald);
+      padding: var(--space-xs) var(--space-md);
+      border-radius: var(--rounded-full);
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .badge-brass {
+      display: inline-flex;
+      align-items: center;
+      background: var(--primary-container);
+      color: var(--on-primary-container);
+      border: 1px solid var(--outline-featured);
+      padding: var(--space-xs) var(--space-md);
+      border-radius: var(--rounded-full);
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    /* Hero section */
+    .hero-section {
+      padding: var(--space-2xl) var(--space-lg) var(--space-xl);
+      max-width: 1160px;
+      margin: 0 auto;
+    }
+    .hero-lede {
+      font-size: clamp(1.125rem, 1.05rem + 0.35vw, 1.25rem);
+      line-height: 1.6;
+      color: var(--on-surface-variant);
+      max-width: 62ch;
+      margin: 0 0 var(--space-xl);
+    }
+
+    /* Arch cards (Signature Terracotta metric & waypoint tiles) */
+    .arch-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
+      gap: var(--space-lg);
+      margin-top: var(--space-lg);
+    }
+    .arch-card {
+      background: var(--surface-container-low);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded-arch);
+      padding: var(--space-lg) var(--space-md) var(--space-md);
+      text-align: center;
+      box-shadow: var(--soft-shadow);
+      transition: transform var(--dur-short) var(--ease-out), box-shadow var(--dur-short) var(--ease-out), background-color var(--dur-short) var(--ease-out);
+    }
+    .arch-card.is-featured {
+      background: var(--primary-container);
+      border-color: var(--outline-featured);
+    }
+    .arch-card-label {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--on-surface-variant);
+      margin-bottom: var(--space-xs);
+    }
+    .arch-card-value {
+      font-family: var(--font-headline);
+      font-weight: 600;
+      font-size: clamp(2rem, 1.6rem + 1.2vw, 2.75rem);
+      line-height: 1.05;
+      font-variant-numeric: lining-nums tabular-nums;
+      color: var(--on-surface);
+      margin: var(--space-xs) 0;
+    }
+    .arch-card-caption {
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      font-weight: 500;
+      color: var(--tertiary);
+    }
+
+    /* Interactive arch buttons (Tourism waypoints) */
+    .arch-btn {
+      appearance: none;
+      width: 100%;
+      cursor: pointer;
+      font-family: inherit;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 140px;
+    }
+    .arch-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--soft-shadow-raised);
+    }
+    .arch-btn[aria-pressed="true"] {
+      background: var(--primary-container);
+      border-color: var(--outline-featured);
+      box-shadow: var(--soft-shadow-raised);
+    }
+    .arch-btn[aria-pressed="true"] .arch-card-label {
+      color: var(--on-primary-container);
+    }
+
+    /* Tonal plaster bands */
+    .section-band {
+      padding: var(--space-2xl) var(--space-lg);
+      border-top: var(--warm-hairline);
+    }
+    .section-band.is-tonal {
+      background-color: var(--surface-container);
+    }
+    .section-inner {
+      max-width: 1160px;
+      margin: 0 auto;
+    }
+    .section-inner * { min-width: 0; }
+
+    /* Asymmetric split layout */
+    .editorial-split {
+      display: grid;
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+      gap: var(--space-xl);
+      align-items: start;
+      margin-top: var(--space-lg);
+    }
+    .editorial-split.is-reversed {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    }
+
+    /* Panel containers (12px rounded-lg, never arch) */
+    .panel {
+      background: var(--surface-container-low);
+      border: var(--warm-hairline);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      box-shadow: var(--soft-shadow);
+    }
+    .panel-highlight {
+      background: var(--primary-container);
+      border: 1px solid var(--outline-featured);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      box-shadow: var(--soft-shadow);
+    }
+
+    /* Card grid */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+      gap: var(--space-lg);
+    }
+    .card-wrapper {
+      container-type: inline-size;
+    }
+
+    /* Pill buttons & controls */
+    .pill-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-lg);
+    }
+    .btn-pill {
+      appearance: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-sm);
+      min-height: 44px;
+      padding: var(--space-sm) var(--space-lg);
+      border-radius: var(--rounded-full);
+      border: 1px solid var(--outline-button);
+      background: var(--background);
+      color: var(--on-surface);
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color var(--dur-short) var(--ease-out), color var(--dur-short) var(--ease-out), box-shadow var(--dur-short) var(--ease-out), transform var(--dur-micro) var(--ease-out);
+    }
+    .btn-pill:hover {
+      background: var(--surface-container-high);
+    }
+    .btn-pill:active {
+      transform: scale(0.99);
+    }
+    .btn-pill[aria-pressed="true"],
+    .btn-pill.is-primary {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: var(--on-primary);
+    }
+    .btn-pill[aria-pressed="true"]:hover,
+    .btn-pill.is-primary:hover {
+      background: var(--primary-hover);
+      border-color: var(--primary-hover);
+    }
+    .btn-pill:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+
+    /* Value chain steps */
+    .chain-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr));
+      gap: var(--space-md);
+      margin-top: var(--space-lg);
+    }
+    .chain-step {
+      background: var(--background);
+      border: var(--warm-hairline);
+      border-radius: var(--rounded);
+      padding: var(--space-md);
+    }
+    .chain-step-num {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--secondary);
+      margin-bottom: var(--space-xs);
+    }
+    .chain-step-title {
+      font-family: var(--font-headline);
+      font-weight: 600;
+      font-size: 1.25rem;
+      line-height: 1.2;
+      color: var(--on-surface);
+      margin: 0 0 var(--space-xs);
+    }
+    .chain-step-desc {
+      font-size: 0.9375rem;
+      line-height: 1.5;
+      color: var(--on-surface-variant);
+      margin: 0;
+    }
+
+    /* Tables */
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      margin-top: var(--space-xl);
+      background: var(--surface-container-low);
+      border: var(--warm-hairline);
+      border-radius: var(--rounded-lg);
+    }
+    table.heritage-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.9375rem;
+    }
+    table.heritage-table thead th {
+      background: var(--surface-container);
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--on-surface-variant);
+      padding: var(--space-md);
+      border-bottom: var(--warm-hairline);
+    }
+    table.heritage-table tbody td {
+      padding: var(--space-md);
+      border-bottom: var(--warm-hairline);
+      vertical-align: top;
+      color: var(--on-surface);
+      font-variant-numeric: tabular-nums;
+    }
+    table.heritage-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* Education grid & interactive audio/diagram modules */
+    .edu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
+      gap: var(--space-lg);
+      margin-top: var(--space-lg);
+    }
+    .beat-strip {
+      display: flex;
+      gap: var(--space-sm);
+      margin: var(--space-md) 0;
+    }
+    .beat-cell {
+      flex: 1;
+      min-height: 48px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--rounded);
+      background: var(--background);
+      border: var(--warm-hairline);
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 700;
+      color: var(--on-surface-variant);
+      transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out);
+    }
+    .beat-cell.is-active {
+      background: var(--primary);
+      color: var(--on-primary);
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    /* Form controls */
+    .control-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: end;
+      gap: var(--space-md);
+      margin-top: var(--space-md);
+    }
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+      flex: 1;
+      min-width: 180px;
+    }
+    .field-label {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--on-surface-variant);
+    }
+    .field-select,
+    .field-range {
+      width: 100%;
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      color: var(--on-surface);
+      background-color: var(--background);
+      border: var(--warm-hairline);
+      border-radius: var(--rounded);
+    }
+    .field-select {
+      min-height: 44px;
+      padding: var(--space-sm) var(--space-xl) var(--space-sm) var(--space-md);
+      cursor: pointer;
+    }
+    .field-select:focus {
+      border-color: var(--primary);
+      box-shadow: var(--focus-ring);
+      outline: none;
+    }
+    .field-range {
+      height: 44px;
+      accent-color: var(--primary);
+      cursor: pointer;
+      background: transparent;
+      border: none;
+    }
+
+    /* SVG Schematics (Balsa & Guayas Basin) */
+    .schematic-box {
+      background: var(--background);
+      border: var(--warm-hairline);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-md);
+    }
+    .schematic-svg {
+      width: 100%;
+      height: auto;
+      display: block;
+      min-height: 240px;
+    }
+    .balsa-part,
+    .basin-zone {
+      cursor: pointer;
+      transition: opacity var(--dur-short) var(--ease-out), filter var(--dur-short) var(--ease-out);
+    }
+    .balsa-part:hover,
+    .basin-zone:hover {
+      opacity: 0.9;
+    }
+    .basin-zone-shape {
+      stroke: var(--outline);
+      stroke-width: 1.5;
+      transition: stroke var(--dur-short) var(--ease-out), stroke-width var(--dur-short) var(--ease-out);
+    }
+    .basin-zone.is-selected .basin-zone-shape {
+      stroke: var(--primary);
+      stroke-width: 3;
+    }
+    .balsa-highlight-ring {
+      fill: none;
+      stroke: var(--primary);
+      stroke-width: 2.5;
+      stroke-dasharray: 5 4;
+      opacity: 0;
+      transition: opacity var(--dur-short) var(--ease-out);
+    }
+    .balsa-part.is-selected .balsa-highlight-ring {
+      opacity: 1;
+    }
+
+    /* Container query inside detail cards */
+    @container (min-width: 480px) {
+      .detail-split {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        gap: var(--space-lg);
+      }
+    }
+    @container (max-width: 479px) {
+      .detail-split {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: var(--space-md);
+      }
+    }
+
+    /* Key-value metadata list */
+    .meta-list {
+      margin: var(--space-md) 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: var(--space-sm);
+    }
+    .meta-list li {
+      padding-top: var(--space-sm);
+      border-top: var(--warm-hairline);
+      font-size: 0.9375rem;
+    }
+    .meta-list strong {
+      display: block;
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--secondary);
+      margin-bottom: var(--space-xs);
+    }
+
+    /* Reveal animation */
+    .reveal-on-scroll {
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity var(--dur-long) var(--ease-out), transform var(--dur-long) var(--ease-out);
+    }
+    .reveal-on-scroll.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Footer */
+    .site-footer {
+      border-top: var(--warm-hairline);
+      background: var(--surface-container-low);
+      padding: var(--space-xl) var(--space-lg);
+    }
+    .footer-inner {
+      max-width: 1160px;
+      margin: 0 auto;
+      display: grid;
+      gap: var(--space-sm);
+    }
+    .footer-title {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--secondary);
+      margin: 0;
+    }
+    .footer-text {
+      font-size: 0.9375rem;
+      color: var(--on-surface-variant);
+      margin: 0;
+      max-width: 75ch;
+    }
+
+    /* Mobile breakpoint */
+    @media (max-width: 640px) {
+      .hero-section,
+      .section-band {
+        padding: var(--space-xl) var(--space-md);
+      }
+      .editorial-split,
+      .editorial-split.is-reversed {
+        grid-template-columns: 1fr;
+        gap: var(--space-lg);
+      }
+      .masthead-inner {
+        padding: var(--space-sm) var(--space-md);
+      }
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="masthead">
+    <div class="masthead-inner">
+      <div class="masthead-brand">Provincia del Guayas · Desarrollo Local</div>
+      <nav class="masthead-nav" aria-label="Navegación por ejes estratégicos">
+        <a class="nav-anchor" href="#economia">Economía</a>
+        <a class="nav-anchor" href="#turismo">Turismo</a>
+        <a class="nav-anchor" href="#educacion">Educación</a>
+        <a class="nav-anchor" href="#territorio">Territorio</a>
+        <a class="nav-anchor" href="#identidad">Identidad</a>
+        <a class="nav-anchor" href="#articulacion">Articulación</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero-section">
+      <div class="kicker-row">
+        <span>Portal Digital del Patrimonio Vivo</span>
+        <span class="kicker-meta">25 Cantones · Ley Orgánica de Cultura (2016)</span>
+      </div>
+      <h1 class="title">El patrimonio cultural como motor de desarrollo <em>sostenible</em> en el Guayas</h1>
+      <p class="hero-lede">
+        Más allá de su valor histórico y simbólico, el patrimonio cultural de la provincia del Guayas constituye un pilar estratégico que impulsa el progreso sostenible de sus 25 cantones, articulando cocina tradicional, oficios artesanales, festividades, saberes ancestrales y geografía fluvial en una misma arquitectura de desarrollo local.
+      </p>
+
+      <div class="ornament-rule" aria-hidden="true">◆ Cinco ejes en territorio ◆</div>
+
+      <div class="arch-grid">
+        <div class="arch-card is-featured">
+          <div class="arch-card-label">Alcance Provincial</div>
+          <div class="arch-card-value">25</div>
+          <div class="arch-card-caption">Cantones articulados</div>
+        </div>
+        <div class="arch-card">
+          <div class="arch-card-label">Estrategia Local</div>
+          <div class="arch-card-value">5</div>
+          <div class="arch-card-caption">Ejes de desarrollo</div>
+        </div>
+        <div class="arch-card">
+          <div class="arch-card-label">Cuenca del Guayas</div>
+          <div class="arch-card-value">3</div>
+          <div class="arch-card-caption">Entornos integrados</div>
+        </div>
+        <div class="arch-card">
+          <div class="arch-card-label">Cohesión Social</div>
+          <div class="arch-card-value">3</div>
+          <div class="arch-card-caption">Raíces en convivencia</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EJE 1: ECONOMIA -->
+    <section id="economia" class="section-band is-tonal">
+      <div class="section-inner">
+        <div class="kicker-row">
+          <span>Eje 01 · Economía Local</span>
+          <span class="badge-emerald">Emprendimiento familiar</span>
+        </div>
+        <h2 class="section-heading">La cocina criolla y los oficios artesanales dinamizan el comercio <em>sostenible</em></h2>
+
+        <div class="editorial-split">
+          <div>
+            <p class="prose">
+              En el Guayas, el patrimonio alimentario y el trabajo manual operan como redes económicas cotidianas. La producción artesanal junto con preparaciones emblemáticas como el <strong>encebollado</strong>, el <strong>bolón de verde</strong> y la <strong>cangrejada criolla</strong> sostienen circuitos de abastecimiento entre el agro, la pesca artesanal y las mesas cantonales.
+            </p>
+            <p class="prose-muted">
+              Al transformar insumos locales mediante saberes heredados, estas expresiones generan emprendimientos familiares sostenibles que retienen valor en las comunidades y fortalecen la economía popular.
+            </p>
+            <div class="panel">
+              <div class="kicker-row">
+                <span>Clave Económica</span>
+              </div>
+              <p class="prose" style="margin-top: var(--space-sm); margin-bottom: 0;">
+                Cada plato tradicional y pieza artesanal enlaza a productores rurales o costeros con talleres y cocinas familiares, multiplicando el intercambio local sin desvincularse de la identidad territorial.
+              </p>
+            </div>
+          </div>
+
+          <div class="panel reveal-on-scroll" id="econ-explorer">
+            <div class="kicker-row">
+              <span>Explorador de Cadenas Productivas</span>
+              <span class="kicker-meta">Seleccione una expresión</span>
+            </div>
+            <div class="pill-group" role="group" aria-label="Expresiones económicas patrimoniales" style="margin-top: var(--space-md);">
+              <button type="button" class="btn-pill" id="econ-btn-encebollado" aria-pressed="true" onclick="selectEconomyItem('encebollado')">Encebollado</button>
+              <button type="button" class="btn-pill" id="econ-btn-bolon" aria-pressed="false" onclick="selectEconomyItem('bolon')">Bolón de verde</button>
+              <button type="button" class="btn-pill" id="econ-btn-cangrejada" aria-pressed="false" onclick="selectEconomyItem('cangrejada')">Cangrejada criolla</button>
+              <button type="button" class="btn-pill" id="econ-btn-artesanias" aria-pressed="false" onclick="selectEconomyItem('artesanias')">Producción artesanal</button>
+            </div>
+
+            <div class="card-wrapper">
+              <div id="econ-detail" aria-live="polite"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EJE 2: TURISMO -->
+    <section id="turismo" class="section-band">
+      <div class="section-inner">
+        <div class="kicker-row">
+          <span>Eje 02 · Turismo Patrimonial</span>
+          <span class="badge-brass">Visitantes nacionales y extranjeros</span>
+        </div>
+        <h2 class="section-heading">Espacios históricos, fiestas cívicas y rodeos fortalecen el sector <em>servicios</em></h2>
+        <p class="prose">
+          El atractivo cultural de la provincia convoca tanto a viajeros nacionales como extranjeros hacia tres grandes escenarios complementarios: la arquitectura portuaria del <strong>barrio Las Peñas</strong>, la vitalidad urbana de las <strong>Fiestas de Octubre</strong> y la tradición ecuestre y rural de los <strong>Rodeos Montubios</strong>.
+        </p>
+
+        <div class="arch-grid" role="group" aria-label="Escenarios turísticos patrimoniales">
+          <button type="button" class="arch-card arch-btn" id="tour-btn-penas" aria-pressed="true" onclick="selectTourismSpot('penas')">
+            <span class="arch-card-label">01 · Patrimonio Urbano</span>
+            <span class="arch-card-value" style="font-size: 1.75rem;">Las Peñas</span>
+            <span class="arch-card-caption">Memoria portuaria y ribera</span>
+          </button>
+          <button type="button" class="arch-card arch-btn" id="tour-btn-octubre" aria-pressed="false" onclick="selectTourismSpot('octubre')">
+            <span class="arch-card-label">02 · Agenda Cívica</span>
+            <span class="arch-card-value" style="font-size: 1.75rem;">Fiestas de Octubre</span>
+            <span class="arch-card-caption">Identidad y espacio público</span>
+          </button>
+          <button type="button" class="arch-card arch-btn" id="tour-btn-rodeo" aria-pressed="false" onclick="selectTourismSpot('rodeo')">
+            <span class="arch-card-label">03 · Cultura Rural</span>
+            <span class="arch-card-value" style="font-size: 1.75rem;">Rodeos Montubios</span>
+            <span class="arch-card-caption">Tradición viva en la cuenca</span>
+          </button>
+        </div>
+
+        <div class="panel-highlight reveal-on-scroll" id="tour-detail" aria-live="polite" style="margin-top: var(--space-lg);"></div>
+
+        <div class="table-wrap reveal-on-scroll">
+          <table class="heritage-table">
+            <thead>
+              <tr>
+                <th scope="col">Atractivo patrimonial</th>
+                <th scope="col">Entorno geográfico</th>
+                <th scope="col">Expresión convocante</th>
+                <th scope="col">Impacto en servicios locales</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Barrio Las Peñas</strong></td>
+                <td>Entorno urbano portuario junto al río Guayas</td>
+                <td>Arquitectura histórica, galerías y recorridos guiados</td>
+                <td>Hospedaje, guianza cultural, cafés y comercio artesanal</td>
+              </tr>
+              <tr>
+                <td><strong>Fiestas de Octubre</strong></td>
+                <td>Eje metropolitano y espacios cívicos</td>
+                <td>Celebración cívica, desfiles, ferias y música popular</td>
+                <td>Restauración, hotelería, transporte y ferias de emprendedores</td>
+              </tr>
+              <tr>
+                <td><strong>Rodeos Montubios</strong></td>
+                <td>Paisajes agrícolas y cantones rurales</td>
+                <td>Destreza ecuestre, amorfinos y convivencia comunitaria</td>
+                <td>Turismo rural, gastronomía criolla y comercio local cantonal</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- EJE 3: EDUCACION -->
+    <section id="educacion" class="section-band is-tonal">
+      <div class="section-inner">
+        <div class="kicker-row">
+          <span>Eje 03 · Educación y Transmisión</span>
+          <span class="badge-emerald">Saberes para nuevas generaciones</span>
+        </div>
+        <h2 class="section-heading">Pasillo, narrativa de José de la Cuadra y balsas de Playas como <em>aula</em> viva</h2>
+        <p class="prose">
+          Preservar el patrimonio exige transmitirlo activamente. En el Guayas, la educación cultural se nutre de la sensibilidad musical del <strong>pasillo guayaquileño</strong>, la fuerza literaria de <strong>José de la Cuadra</strong> y el conocimiento técnico ancestral de la <strong>navegación en balsas de Playas</strong>.
+        </p>
+
+        <div class="edu-grid">
+          <!-- Module 1: Pasillo -->
+          <article class="panel reveal-on-scroll">
+            <div class="kicker-row">
+              <span>Música · Compás 3/4</span>
+              <span class="kicker-meta" id="pasillo-status">En pausa</span>
+            </div>
+            <h3 class="subhead" style="margin-top: var(--space-sm);">El pasillo guayaquileño</h3>
+            <p class="prose-muted" style="font-size: 0.9375rem;">
+              Su cadencia ternaria (tres tiempos por compás) articula guitarra, requinto y poesía cantada. Escuche el pulso base de acompañamiento y ajuste el tempo para explorar su ritmo expresivo.
+            </p>
+
+            <div class="beat-strip" aria-label="Indicador de compás ternario 3 por 4">
+              <div class="beat-cell" id="beat-1"><span>1</span><span>Grave</span></div>
+              <div class="beat-cell" id="beat-2"><span>2</span><span>Arpegio</span></div>
+              <div class="beat-cell" id="beat-3"><span>3</span><span>Cierre</span></div>
+            </div>
+
+            <div class="control-row">
+              <div class="field-group">
+                <label class="field-label" for="pasillo-tempo">Tempo (pulsos por min: <span id="pasillo-tempo-val">84</span>)</label>
+                <input class="field-range" type="range" id="pasillo-tempo" min="64" max="108" value="84" oninput="updatePasilloTempo(this.value)">
+              </div>
+              <button type="button" class="btn-pill is-primary" id="pasillo-toggle" aria-pressed="false" onclick="togglePasilloAudio()">
+                Escuchar compás 3/4
+              </button>
+            </div>
+          </article>
+
+          <!-- Module 2: Jose de la Cuadra -->
+          <article class="panel reveal-on-scroll">
+            <div class="kicker-row">
+              <span>Literatura Guayaquileña</span>
+              <span class="kicker-meta">Legado narrativo</span>
+            </div>
+            <h3 class="subhead" style="margin-top: var(--space-sm);">Literatura de José de la Cuadra</h3>
+            <p class="prose-muted" style="font-size: 0.9375rem;">
+              Estudiar su obra en escuelas y espacios culturales acerca a las nuevas generaciones a la realidad social, el lenguaje oral y el paisaje humano de la costa y la cuenca del Guayas.
+            </p>
+
+            <div class="field-group" style="margin-top: var(--space-md);">
+              <label class="field-label" for="cuadra-lens">Eje de lectura formativa</label>
+              <select class="field-select" id="cuadra-lens" onchange="selectCuadraLens(this.value)">
+                <option value="montubio">La voz y dignidad del mundo montubio</option>
+                <option value="paisaje">Geografía fluvial y vida rural del litoral</option>
+                <option value="oralidad">Tradición oral convertida en memoria escrita</option>
+              </select>
+            </div>
+
+            <div id="cuadra-output" class="panel-highlight" style="margin-top: var(--space-md); padding: var(--space-md);" aria-live="polite"></div>
+          </article>
+
+          <!-- Module 3: Balsas de Playas -->
+          <article class="panel reveal-on-scroll">
+            <div class="kicker-row">
+              <span>Saber Ancestral Marítimo</span>
+              <span class="kicker-meta">Interactivo</span>
+            </div>
+            <h3 class="subhead" style="margin-top: var(--space-sm);">Navegación en balsas de Playas</h3>
+            <p class="prose-muted" style="font-size: 0.9375rem;">
+              Seleccione cada elemento de la embarcación en el esquema para conocer cómo la ingeniería tradicional costera aprovecha vientos, mareas y maderas del litoral.
+            </p>
+
+            <div class="schematic-box">
+              <svg class="schematic-svg" viewBox="0 0 360 220" role="img" aria-label="Esquema interactivo de una balsa tradicional de Playas">
+                <!-- Sea horizon & waves -->
+                <rect x="0" y="155" width="360" height="65" rx="6" fill="var(--map-water)"></rect>
+                <path d="M 10 172 Q 55 162 100 172 T 190 172 T 280 172 T 350 172" fill="none" stroke="var(--map-water-stroke)" stroke-width="2"></path>
+                <path d="M 20 192 Q 75 182 130 192 T 240 192 T 340 192" fill="none" stroke="var(--map-water-stroke)" stroke-width="1.5"></path>
+
+                <!-- Part 1: Vela triangular -->
+                <g class="balsa-part is-selected" id="balsa-part-vela" tabindex="0" role="button" aria-label="Vela triangular" onclick="selectBalsaPart('vela')" onkeydown="handleKeySelect(event, function() { selectBalsaPart('vela'); })">
+                  <line x1="175" y1="30" x2="175" y2="152" stroke="var(--on-surface)" stroke-width="3.5" stroke-linecap="round"></line>
+                  <polygon points="178,36 278,136 178,138" fill="var(--sail-cloth)" stroke="var(--outline)" stroke-width="2"></polygon>
+                  <polygon class="balsa-highlight-ring" points="172,26 286,142 172,144"></polygon>
+                  <text x="206" y="106" font-size="11" font-weight="700" fill="var(--on-surface)">VELA</text>
+                </g>
+
+                <!-- Part 2: Troncos de balsa -->
+                <g class="balsa-part" id="balsa-part-troncos" tabindex="0" role="button" aria-label="Troncos de balsa" onclick="selectBalsaPart('troncos')" onkeydown="handleKeySelect(event, function() { selectBalsaPart('troncos'); })">
+                  <rect x="70" y="148" width="220" height="16" rx="8" fill="var(--wood-balsa)" stroke="var(--wood-balsa-stroke)" stroke-width="2"></rect>
+                  <line x1="95" y1="148" x2="95" y2="164" stroke="var(--wood-balsa-stroke)" stroke-width="1.5"></line>
+                  <line x1="140" y1="148" x2="140" y2="164" stroke="var(--wood-balsa-stroke)" stroke-width="1.5"></line>
+                  <line x1="220" y1="148" x2="220" y2="164" stroke="var(--wood-balsa-stroke)" stroke-width="1.5"></line>
+                  <line x1="265" y1="148" x2="265" y2="164" stroke="var(--wood-balsa-stroke)" stroke-width="1.5"></line>
+                  <rect class="balsa-highlight-ring" x="64" y="142" width="232" height="28" rx="10"></rect>
+                  <text x="150" y="160" font-size="10" font-weight="700" fill="var(--on-surface)">TRONCOS</text>
+                </g>
+
+                <!-- Part 3: Guara / timon -->
+                <g class="balsa-part" id="balsa-part-guara" tabindex="0" role="button" aria-label="Guaras o timón de orza" onclick="selectBalsaPart('guara')" onkeydown="handleKeySelect(event, function() { selectBalsaPart('guara'); })">
+                  <rect x="92" y="138" width="12" height="58" rx="3" fill="var(--primary)" stroke="var(--on-primary)" stroke-width="1.2"></rect>
+                  <rect class="balsa-highlight-ring" x="86" y="132" width="24" height="70" rx="5"></rect>
+                  <text x="42" y="196" font-size="10" font-weight="700" fill="var(--primary)">GUARA</text>
+                </g>
+              </svg>
+            </div>
+
+            <div class="pill-group" role="group" aria-label="Componentes de la balsa" style="margin-top: var(--space-md); margin-bottom: var(--space-sm);">
+              <button type="button" class="btn-pill" id="balsa-btn-vela" aria-pressed="true" onclick="selectBalsaPart('vela')">Vela</button>
+              <button type="button" class="btn-pill" id="balsa-btn-troncos" aria-pressed="false" onclick="selectBalsaPart('troncos')">Troncos</button>
+              <button type="button" class="btn-pill" id="balsa-btn-guara" aria-pressed="false" onclick="selectBalsaPart('guara')">Guara</button>
+            </div>
+
+            <div id="balsa-output" aria-live="polite" style="font-size: 0.9375rem; color: var(--on-surface-variant);"></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- EJE 4: TERRITORIO -->
+    <section id="territorio" class="section-band">
+      <div class="section-inner">
+        <div class="kicker-row">
+          <span>Eje 04 · Territorio y Geografía</span>
+          <span class="badge-brass">Cuenca del río Guayas</span>
+        </div>
+        <h2 class="section-heading">Una geografía fluvial que enlaza puertos, sabanas agrícolas y <em>costa</em></h2>
+
+        <div class="editorial-split is-reversed">
+          <div class="schematic-box reveal-on-scroll">
+            <div class="kicker-row" style="margin-bottom: var(--space-sm);">
+              <span>Esquema Territorial de la Cuenca</span>
+              <span class="kicker-meta">Diagrama conceptual</span>
+            </div>
+            <svg class="schematic-svg" viewBox="0 0 540 360" role="img" aria-label="Esquema territorial interactivo de los tres paisajes de la cuenca del río Guayas">
+              <!-- Ocean / Gulf backdrop -->
+              <rect x="0" y="0" width="540" height="360" rx="10" fill="var(--map-water)"></rect>
+
+              <!-- Zone 1: Paisajes agricolas (North / Interior basin) -->
+              <g class="basin-zone" id="zone-agricola" tabindex="0" role="button" aria-label="Paisajes agrícolas de la cuenca" onclick="selectTerritoryZone('agricola')" onkeydown="handleKeySelect(event, function() { selectTerritoryZone('agricola'); })">
+                <path class="basin-zone-shape" d="M 48 26 L 492 26 L 492 160 C 405 170 300 155 180 165 C 120 170 72 150 48 135 Z" fill="var(--map-land-agro)"></path>
+                <text x="82" y="66" font-size="14" font-weight="700" fill="var(--on-surface)">PAISAJES AGRÍCOLAS</text>
+                <text x="82" y="88" font-size="12" fill="var(--on-surface-variant)">Sabanas, cultivos y cantones rurales de la cuenca</text>
+              </g>
+
+              <!-- Zone 2: Entornos urbanos portuarios (Central river confluence) -->
+              <g class="basin-zone is-selected" id="zone-portuario" tabindex="0" role="button" aria-label="Entornos urbanos portuarios" onclick="selectTerritoryZone('portuario')" onkeydown="handleKeySelect(event, function() { selectTerritoryZone('portuario'); })">
+                <path class="basin-zone-shape" d="M 150 155 C 250 148 360 154 445 156 L 445 245 C 365 248 245 244 175 232 Z" fill="var(--map-land-port)"></path>
+                <circle cx="295" cy="198" r="10" fill="var(--primary)"></circle>
+                <text x="205" y="182" font-size="14" font-weight="700" fill="var(--on-primary-container)">ENTORNOS URBANOS PORTUARIOS</text>
+                <text x="205" y="226" font-size="12" fill="var(--on-surface-variant)">Eje fluvial, barrio Las Peñas y comercio</text>
+              </g>
+
+              <!-- Zone 3: Paisajes costeros (Southwest estuary & Playas) -->
+              <g class="basin-zone" id="zone-costero" tabindex="0" role="button" aria-label="Paisajes costeros" onclick="selectTerritoryZone('costero')" onkeydown="handleKeySelect(event, function() { selectTerritoryZone('costero'); })">
+                <path class="basin-zone-shape" d="M 38 190 C 95 190 150 220 198 250 L 185 328 C 115 324 58 292 38 252 Z" fill="var(--map-land-coast)"></path>
+                <circle cx="105" cy="272" r="8" fill="var(--tertiary)"></circle>
+                <text x="52" y="242" font-size="13" font-weight="700" fill="var(--on-tertiary-container)">PAISAJES COSTEROS</text>
+                <text x="52" y="302" font-size="12" fill="var(--on-surface-variant)">Playas, estuario y pesca</text>
+              </g>
+
+              <!-- Rio Guayas river flow overlay (non-blocking) -->
+              <path d="M 260 28 C 258 85 275 125 272 178 C 268 232 235 282 215 345" fill="none" stroke="var(--map-water)" stroke-width="22" stroke-linecap="round" pointer-events="none"></path>
+              <path d="M 260 28 C 258 85 275 125 272 178 C 268 232 235 282 215 345" fill="none" stroke="var(--tertiary)" stroke-width="3" stroke-dasharray="6 4" stroke-linecap="round" pointer-events="none"></path>
+              <text x="288" y="328" font-size="12" font-weight="700" fill="var(--tertiary)" pointer-events="none">CUENCA DEL RÍO GUAYAS</text>
+            </svg>
+          </div>
+
+          <div class="reveal-on-scroll">
+            <p class="prose">
+              La riqueza cultural del Guayas no flota aislada del territorio: se integra orgánicamente con la geografía de la <strong>cuenca del río Guayas</strong>. Este sistema fluvial enlaza la vida urbana y portuaria con las planicies agrícolas del interior y los horizontes marinos del litoral.
+            </p>
+            <div class="pill-group" role="group" aria-label="Zonas territoriales de la cuenca">
+              <button type="button" class="btn-pill" id="zone-btn-portuario" aria-pressed="true" onclick="selectTerritoryZone('portuario')">Urbano portuario</button>
+              <button type="button" class="btn-pill" id="zone-btn-agricola" aria-pressed="false" onclick="selectTerritoryZone('agricola')">Paisaje agrícola</button>
+              <button type="button" class="btn-pill" id="zone-btn-costero" aria-pressed="false" onclick="selectTerritoryZone('costero')">Paisaje costero</button>
+            </div>
+            <div class="panel" id="zone-detail" aria-live="polite"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EJE 5: IDENTIDAD CULTURAL Y ARTICULACION -->
+    <section id="identidad" class="section-band is-tonal">
+      <div class="section-inner">
+        <div class="kicker-row">
+          <span>Eje 05 · Identidad Cultural</span>
+          <span class="badge-emerald">Cohesión social</span>
+        </div>
+        <h2 class="section-heading">Convivencia diversa frente a la globalización y sentido de <em>pertenencia</em></h2>
+        <p class="prose">
+          La identidad del Guayas nace del encuentro vivo entre comunidades <strong>montubias</strong>, <strong>afrodescendientes</strong> y descendientes del pueblo <strong>Manteño-Huancavilca</strong>. Esta convivencia cotidiana fortalece el tejido comunitario, consolida el sentido de pertenencia y preserva la cohesión social frente a las presiones de la homogeneización global.
+        </p>
+
+        <div class="card-grid" style="margin-top: var(--space-lg);">
+          <article class="panel reveal-on-scroll">
+            <span class="badge-brass">Comunidad Montubia</span>
+            <h3 class="subhead" style="margin-top: var(--space-md);">Cultura rural de la cuenca</h3>
+            <p class="prose-muted" style="font-size: 0.9375rem;">
+              Protagonista de los rodeos montubios, la tradición oral y la producción agrícola provincial. Su mundo vital y simbólico fue retratado con profundidad por José de la Cuadra.
+            </p>
+          </article>
+
+          <article class="panel reveal-on-scroll">
+            <span class="badge-emerald">Comunidad Afrodescendiente</span>
+            <h3 class="subhead" style="margin-top: var(--space-md);">Aporte cultural y comunitario</h3>
+            <p class="prose-muted" style="font-size: 0.9375rem;">
+              Presente en la vida urbana portuaria y en los cantones de la provincia, enriquece las expresiones musicales, culinarias, organizativas y festivas que distinguen al Guayas.
+            </p>
+          </article>
+
+          <article class="panel reveal-on-scroll">
+            <span class="badge-brass">Pueblo Manteño-Huancavilca</span>
+            <h3 class="subhead" style="margin-top: var(--space-md);">Herencia ancestral del litoral</h3>
+            <p class="prose-muted" style="font-size: 0.9375rem;">
+              Portador de la memoria milenaria de la costa guayasense, reflejada en la relación respetuosa con el mar, la pesca tradicional y la navegación en balsas de Playas.
+            </p>
+          </article>
+        </div>
+
+        <div class="ornament-rule" aria-hidden="true">◆ Articulación estratégica ◆</div>
+
+        <!-- Synthesis Tool inside Narrative -->
+        <section id="articulacion" class="panel-highlight reveal-on-scroll" aria-labelledby="articulacion-heading">
+          <div class="kicker-row">
+            <span>Laboratorio de Articulación Territorial</span>
+            <span class="kicker-meta">Ley Orgánica de Cultura (2016)</span>
+          </div>
+          <h3 id="articulacion-heading" class="subhead" style="margin-top: var(--space-sm); font-size: var(--headline-size);">
+            ¿Cómo se conectan dos ejes para impulsar el desarrollo de los 25 cantones?
+          </h3>
+          <p class="prose-muted">
+            Combine dos ejes estratégicos para visualizar cómo el patrimonio cultural opera como sistema integrado en la provincia del Guayas.
+          </p>
+
+          <div class="control-row">
+            <div class="field-group">
+              <label class="field-label" for="axis-a">Primer eje estratégico</label>
+              <select class="field-select" id="axis-a" onchange="updateSynergy()">
+                <option value="economia" selected>Economía (gastronomía y artesanías)</option>
+                <option value="turismo">Turismo (Las Peñas, octubre, rodeos)</option>
+                <option value="educacion">Educación (pasillo, literatura, balsas)</option>
+                <option value="territorio">Territorio (cuenca del río Guayas)</option>
+                <option value="identidad">Identidad cultural (convivencia diversa)</option>
+              </select>
+            </div>
+
+            <div class="field-group">
+              <label class="field-label" for="axis-b">Segundo eje estratégico</label>
+              <select class="field-select" id="axis-b" onchange="updateSynergy()">
+                <option value="economia">Economía (gastronomía y artesanías)</option>
+                <option value="turismo" selected>Turismo (Las Peñas, octubre, rodeos)</option>
+                <option value="educacion">Educación (pasillo, literatura, balsas)</option>
+                <option value="territorio">Territorio (cuenca del río Guayas)</option>
+                <option value="identidad">Identidad cultural (convivencia diversa)</option>
+              </select>
+            </div>
+          </div>
+
+          <div id="synergy-output" class="panel" style="margin-top: var(--space-lg); background: var(--background);" aria-live="polite"></div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-title">Fuente base y marco normativo</p>
+      <p class="footer-text">
+        Contenido estructurado a partir del documento de síntesis sobre Desarrollo Local de la Provincia del Guayas (25 cantones) y fundamentado en: Asamblea Nacional del Ecuador (2016), <em>Ley Orgánica de Cultura</em>, Registro Oficial N.º 913, Ministerio de Cultura y Patrimonio del Ecuador (culturaypatrimonio.gob.ec).
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    const ECONOMY_DATA = {
+      encebollado: {
+        badge: `Gastronomía costera y urbana`,
+        title: `Encebollado guayasense`,
+        summary: `Plato emblemático de alta rotación diaria que articula la pesca del litoral, el cultivo de yuca y cebolla, y el trabajo familiar en comedores populares y mercados cantonales.`,
+        steps: [
+          { num: `Eslabón 01`, title: `Abastecimiento`, desc: `Pesca artesanal de albacora junto con yuca y especias provenientes de zonas agrícolas.` },
+          { num: `Eslabón 02`, title: `Oficio culinario`, desc: `Receta transmitida en hogares y picanterías familiares con técnicas propias de cocción.` },
+          { num: `Eslabón 03`, title: `Comercio local`, desc: `Dinamiza mercados municipales y emprendimientos matutinos en los 25 cantones.` }
+        ]
+      },
+      bolon: {
+        badge: `Tradición agrícola y urbana`,
+        title: `Bolón de verde`,
+        summary: `Preparación cotidiana que transforma el plátano verde de la cuenca del Guayas en un producto de gran demanda local, sosteniendo pequeños negocios familiares.`,
+        steps: [
+          { num: `Eslabón 01`, title: `Producción agrícola`, desc: `Cultivo de plátano verde y derivados lácteos o cárnicos en fincas de la provincia.` },
+          { num: `Eslabón 02`, title: `Elaboración artesanal`, desc: `Majado manual y cocción tradicional que conservan textura y sazón propias.` },
+          { num: `Eslabón 03`, title: `Emprendimiento`, desc: `Base de cafeterías comunitarias, puestos vecinales y desayunos criollos sostenibles.` }
+        ]
+      },
+      cangrejada: {
+        badge: `Cultura de estuario y encuentro`,
+        title: `Cangrejada criolla`,
+        summary: `Expresión gastronómica vinculada al manglar y al encuentro social, que conecta la recolección responsable en el estuario con restaurantes y celebraciones familiares.`,
+        steps: [
+          { num: `Eslabón 01`, title: `Ecosistema estuarino`, desc: `Captura artesanal en manglares bajo ciclos de veda y cuidado ambiental.` },
+          { num: `Eslabón 02`, title: `Preparación criolla`, desc: `Cocción especiada acompañada de plátano maduro, ensalada y recetas familiares.` },
+          { num: `Eslabón 03`, title: `Economía asociativa`, desc: `Impulsa cangrejales tradicionales, comercio vecinal y turismo gastronómico.` }
+        ]
+      },
+      artesanias: {
+        badge: `Oficios heredados`,
+        title: `Producción artesanal`,
+        summary: `Elaboración de piezas utilitarias y artísticas en fibras vegetales, madera y cerámica que preserva técnicas ancestrales y genera ingresos autónomos en talleres familiares.`,
+        steps: [
+          { num: `Eslabón 01`, title: `Materia prima local`, desc: `Aprovechamiento sostenible de fibras, maderas y materiales propios del territorio.` },
+          { num: `Eslabón 02`, title: `Taller familiar`, desc: `Aprendizaje intergeneracional de tejidos, tallados y acabados manuales.` },
+          { num: `Eslabón 03`, title: `Circuitos feriales`, desc: `Venta directa en ferias cantonales, barrios patrimoniales y espacios turísticos.` }
+        ]
+      }
+    };
+
+    const TOURISM_DATA = {
+      penas: {
+        tag: `Entorno urbano portuario`,
+        title: `Barrio Las Peñas`,
+        desc: `Icono patrimonial asentado junto al río Guayas. Su arquitectura tradicional, escalinatas y espacios culturales atraen a visitantes nacionales y extranjeros interesados en la historia portuaria y el arte local.`,
+        services: `Activa servicios de guianza patrimonial, galerías de arte, cafés históricos, hospedaje boutique y venta de artesanías.`,
+        cantonScope: `Nodo metropolitano articulado con rutas fluviales y circuitos culturales del Guayas.`
+      },
+      octubre: {
+        tag: `Celebración cívica y cultural`,
+        title: `Fiestas de Octubre`,
+        desc: `Temporada conmemorativa que convierte espacios públicos, plazas y recintos feriales en vitrinas de identidad guayasense, música y gastronomía tradicional.`,
+        services: `Impulsa la ocupación hotelera, restauración, transporte turístico, logística cultural y ferias de emprendimientos familiares.`,
+        cantonScope: `Convoca delegaciones y visitantes de todos los cantones y del extranjero.`
+      },
+      rodeo: {
+        tag: `Paisaje agrícola y tradición rural`,
+        title: `Rodeos Montubios`,
+        desc: `Encuentro emblemático de la ruralidad guayasense donde convergen destreza ecuestre, vestimenta tradicional, amorfinos y hospitalidad comunitaria.`,
+        services: `Fortalece el turismo rural, la gastronomía criolla cantonal, la talabartería artesanal y el comercio local en cabeceras rurales.`,
+        cantonScope: `Dinamiza la economía turística en los cantones agrícolas de la cuenca del Guayas.`
+      }
+    };
+
+    const CUADRA_DATA = {
+      montubio: {
+        title: `La voz y dignidad del mundo montubio`,
+        text: `En la enseñanza literaria del Guayas, la obra de José de la Cuadra permite comprender al montubio como sujeto histórico central de la cuenca, alejado de caricaturas y valorado en su complejidad social y cultural.`
+      },
+      paisaje: {
+        title: `Geografía fluvial y vida rural del litoral`,
+        text: `Sus relatos sitúan los ríos, esteros, haciendas y pueblos rurales como escenario vivo donde naturaleza, trabajo agrícola y costumbres explican el desarrollo histórico de la provincia.`
+      },
+      oralidad: {
+        title: `Tradición oral convertida en memoria escrita`,
+        text: `El estudio de su narrativa en aulas y clubes de lectura transmite modismos, giros del habla costeña y relatos populares a las nuevas generaciones, reforzando la identidad lingüística regional.`
+      }
+    };
+
+    const BALSA_DATA = {
+      vela: `<strong>Vela triangular:</strong> Capta los vientos costeros de Playas para impulsar la embarcación sin motor, reflejando el dominio tradicional de las corrientes atmosféricas.`,
+      troncos: `<strong>Troncos de balsa:</strong> Madera liviana y resistente unida con amarres tradicionales que otorga flotabilidad estable frente al oleaje del Pacífico.`,
+      guara: `<strong>Guara o timón de orza:</strong> Tablón móvil sumergido entre los troncos que permite gobernar el rumbo y estabilizar la balsa, técnica heredada del pueblo Manteño-Huancavilca.`
+    };
+
+    const TERRITORY_DATA = {
+      portuario: {
+        badge: `Núcleo fluvial y metropolitano`,
+        title: `Entornos urbanos portuarios`,
+        desc: `Articulados alrededor del eje del río Guayas, concentran memoria arquitectónica como el barrio Las Peñas, intercambio comercial, servicios turísticos y espacios de difusión artística como el pasillo guayaquileño.`,
+        links: `Economía gastronómica · Turismo patrimonial · Difusión musical y literaria`
+      },
+      agricola: {
+        badge: `Llanuras y ríos tributarios`,
+        title: `Paisajes agrícolas de la cuenca`,
+        desc: `Tierras fértiles alimentadas por los afluentes del Guayas que proveen verde, yuca y productos primarios para la cocina tradicional, además de albergar los rodeos montubios y la cultura rural retratada por José de la Cuadra.`,
+        links: `Abastecimiento alimentario · Rodeos Montubios · Identidad montubia`
+      },
+      costero: {
+        badge: `Estuario, manglar y océano`,
+        title: `Paisajes costeros y Playas`,
+        desc: `Zona donde la cuenca se encuentra con el mar, integrando pesca artesanal, recolección tradicional para la cangrejada criolla y la navegación ancestral en balsas heredada del pueblo Manteño-Huancavilca.`,
+        links: `Pesca y manglar · Balsas de Playas · Herencia Manteño-Huancavilca`
+      }
+    };
+
+    const SYNERGY_MAP = {
+      'economia+economia': {
+        title: `Encadenamiento productivo entre cocina y artesanía`,
+        body: `La gastronomía tradicional (encebollado, bolón de verde, cangrejada) y la producción artesanal comparten ferias, mercados y emprendimientos familiares que multiplican el ingreso local en los 25 cantones.`
+      },
+      'economia+turismo': {
+        title: `Gastronomía y oficios como atractivo turístico sostenible`,
+        body: `Los visitantes atraídos por el barrio Las Peñas, las Fiestas de Octubre y los Rodeos Montubios consumen encebollado, bolón de verde, cangrejada y artesanías locales, convirtiendo la visita turística en sustento directo para familias emprendedoras.`
+      },
+      'economia+educacion': {
+        title: `Formación generacional en oficios y cocina patrimonial`,
+        body: `Transmitir recetas tradicionales, técnicas artesanales y saberes costeros a jóvenes asegura que los emprendimientos familiares no pierdan autenticidad ni relevo generacional.`
+      },
+      'economia+territorio': {
+        title: `Rutas productivas de la cuenca del río Guayas`,
+        body: `El territorio conecta los insumos agrícolas del interior, la pesca y el cangrejo de la costa, y los mercados urbanos portuarios en una sola economía regional integrada.`
+      },
+      'economia+identidad': {
+        title: `Valor cultural agregado frente a productos estandarizados`,
+        body: `La convivencia entre tradiciones montubias, afrodescendientes y Manteño-Huancavilca otorga singularidad a los sabores y artesanías del Guayas, protegiendo el comercio local frente a la globalización.`
+      },
+      'turismo+turismo': {
+        title: `Circuito integrado entre ciudad, fiesta y ruralidad`,
+        body: `Combinar el recorrido urbano por Las Peñas con la agenda cívica de octubre y los Rodeos Montubios distribuye el flujo de visitantes y fortalece los servicios en todo el territorio.`
+      },
+      'turismo+educacion': {
+        title: `Turismo cultural con contenido histórico y pedagógico`,
+        body: `Integrar el pasillo guayaquileño, las rutas literarias de José de la Cuadra y la demostración de balsas en Playas enriquece la experiencia turística y educa a residentes y visitantes.`
+      },
+      'turismo+territorio': {
+        title: `Revalorización turística de tres paisajes complementarios`,
+        body: `La cuenca del Guayas permite recorrer en una misma provincia puertos históricos, paisajes agrícolas de rodeo y costas de navegación ancestral.`
+      },
+      'turismo+identidad': {
+        title: `Hospitalidad basada en el sentido de pertenencia`,
+        body: `Cuando las comunidades montubias, afrodescendientes y Manteño-Huancavilca protagonizan los espacios turísticos, el sector servicios se fortalece sin desarraigar la cultura local.`
+      },
+      'educacion+educacion': {
+        title: `Currículo cultural integral: música, literatura y mar`,
+        body: `Reunir el pasillo, la narrativa de José de la Cuadra y la navegación en balsas de Playas ofrece a las nuevas generaciones una visión completa de su herencia artística y técnica.`
+      },
+      'educacion+territorio': {
+        title: `Aprendizaje situado en la geografía guayasense`,
+        body: `Cada saber ancestral dialoga con un entorno real: la literatura con la cuenca fluvial, el pasillo con el puerto urbano y las balsas con el litoral de Playas.`
+      },
+      'educacion+identidad': {
+        title: `Cohesión social desde la memoria compartida`,
+        body: `Enseñar las contribuciones históricas de montubios, afrodescendientes y pueblos Manteño-Huancavilca refuerza el respeto mutuo y el arraigo juvenil frente a la globalización.`
+      },
+      'territorio+territorio': {
+        title: `Integración urbano-rural-costera en los 25 cantones`,
+        body: `Reconocer la cuenca del río Guayas como sistema unitario evita aislar la capital provincial de sus cantones agrícolas y costeros.`
+      },
+      'territorio+identidad': {
+        title: `Diversidad cultural arraigada en cada paisaje`,
+        body: `Los entornos portuarios, agrícolas y costeros cobran sentido humano gracias a la convivencia histórica entre comunidades montubias, afrodescendientes y descendientes Manteño-Huancavilca.`
+      },
+      'identidad+identidad': {
+        title: `Pacto de convivencia y cohesión provincial`,
+        body: `Al amparo de la Ley Orgánica de Cultura (2016), el reconocimiento mutuo de las distintas raíces del Guayas fortalece la pertenencia colectiva y el desarrollo sostenible.`
+      }
+    };
+
+    function handleKeySelect(event, callback) {
+      if (event.key === `Enter` || event.key === ` `) {
+        event.preventDefault();
+        callback();
+      }
+    }
+
+    function selectEconomyItem(key) {
+      const data = ECONOMY_DATA[key];
+      const container = document.getElementById(`econ-detail`);
+      if (!data || !container) return;
+
+      const keys = [`encebollado`, `bolon`, `cangrejada`, `artesanias`];
+      keys.forEach(function(k) {
+        const btn = document.getElementById(`econ-btn-` + k);
+        if (btn) btn.setAttribute(`aria-pressed`, k === key ? `true` : `false`);
+      });
+
+      const stepsHtml = data.steps.map(function(step) {
+        return `
+          <div class="chain-step">
+            <div class="chain-step-num">${step.num}</div>
+            <h4 class="chain-step-title">${step.title}</h4>
+            <p class="chain-step-desc">${step.desc}</p>
+          </div>
+        `;
+      }).join(``);
+
+      container.innerHTML = `
+        <span class="badge-emerald">${data.badge}</span>
+        <h3 class="subhead" style="margin-top: var(--space-sm);">${data.title}</h3>
+        <p class="prose-muted" style="margin-bottom: 0;">${data.summary}</p>
+        <div class="chain-steps">${stepsHtml}</div>
+      `;
+    }
+
+    function selectTourismSpot(key) {
+      const data = TOURISM_DATA[key];
+      const container = document.getElementById(`tour-detail`);
+      if (!data || !container) return;
+
+      const keys = [`penas`, `octubre`, `rodeo`];
+      keys.forEach(function(k) {
+        const btn = document.getElementById(`tour-btn-` + k);
+        if (btn) btn.setAttribute(`aria-pressed`, k === key ? `true` : `false`);
+      });
+
+      container.innerHTML = `
+        <div class="kicker-row">
+          <span>${data.tag}</span>
+          <span class="kicker-meta">${data.cantonScope}</span>
+        </div>
+        <h3 class="subhead" style="margin-top: var(--space-sm); font-size: var(--headline-size);">${data.title}</h3>
+        <p class="prose">${data.desc}</p>
+        <ul class="meta-list">
+          <li>
+            <strong>Impulso al sector servicios</strong>
+            ${data.services}
+          </li>
+        </ul>
+      `;
+    }
+
+    function selectCuadraLens(key) {
+      const data = CUADRA_DATA[key];
+      const container = document.getElementById(`cuadra-output`);
+      if (!data || !container) return;
+
+      container.innerHTML = `
+        <strong style="display: block; font-family: var(--font-headline); font-size: 1.25rem; color: var(--on-primary-container); margin-bottom: var(--space-xs);">${data.title}</strong>
+        <p style="margin: 0; font-size: 0.9375rem; color: var(--on-surface);">${data.text}</p>
+      `;
+    }
+
+    function selectBalsaPart(partKey) {
+      const text = BALSA_DATA[partKey];
+      const output = document.getElementById(`balsa-output`);
+      if (!text || !output) return;
+
+      const parts = [`vela`, `troncos`, `guara`];
+      parts.forEach(function(p) {
+        const svgEl = document.getElementById(`balsa-part-` + p);
+        const btnEl = document.getElementById(`balsa-btn-` + p);
+        if (svgEl) {
+          if (p === partKey) svgEl.classList.add(`is-selected`);
+          else svgEl.classList.remove(`is-selected`);
+        }
+        if (btnEl) {
+          btnEl.setAttribute(`aria-pressed`, p === partKey ? `true` : `false`);
+        }
+      });
+
+      output.innerHTML = text;
+    }
+
+    function selectTerritoryZone(zoneKey) {
+      const data = TERRITORY_DATA[zoneKey];
+      const output = document.getElementById(`zone-detail`);
+      if (!data || !output) return;
+
+      const zones = [`portuario`, `agricola`, `costero`];
+      zones.forEach(function(z) {
+        const svgEl = document.getElementById(`zone-` + z);
+        const btnEl = document.getElementById(`zone-btn-` + z);
+        if (svgEl) {
+          if (z === zoneKey) svgEl.classList.add(`is-selected`);
+          else svgEl.classList.remove(`is-selected`);
+        }
+        if (btnEl) {
+          btnEl.setAttribute(`aria-pressed`, z === zoneKey ? `true` : `false`);
+        }
+      });
+
+      output.innerHTML = `
+        <span class="badge-brass">${data.badge}</span>
+        <h3 class="subhead" style="margin-top: var(--space-sm);">${data.title}</h3>
+        <p class="prose-muted" style="margin-bottom: 0;">${data.desc}</p>
+        <ul class="meta-list">
+          <li>
+            <strong>Expresiones integradas</strong>
+            ${data.links}
+          </li>
+        </ul>
+      `;
+    }
+
+    function updateSynergy() {
+      const selectA = document.getElementById(`axis-a`);
+      const selectB = document.getElementById(`axis-b`);
+      const output = document.getElementById(`synergy-output`);
+      if (!selectA || !selectB || !output) return;
+
+      const pair = [selectA.value, selectB.value].sort().join(`+`);
+      const data = SYNERGY_MAP[pair];
+      if (!data) return;
+
+      output.innerHTML = `
+        <div class="kicker-row">
+          <span>Sinergia cantonal resultante</span>
+          <span class="badge-emerald">25 cantones</span>
+        </div>
+        <h4 class="subhead" style="margin-top: var(--space-sm);">${data.title}</h4>
+        <p class="prose" style="margin-bottom: 0;">${data.body}</p>
+      `;
+    }
+
+    /* Web Audio API synthesizer for Pasillo 3/4 beat */
+    let audioCtx = null;
+    let pasilloTimer = null;
+    let pasilloPlaying = false;
+    let pasilloStep = 0;
+    let pasilloBpm = 84;
+
+    function playPluckNote(freq, isBass) {
+      if (!audioCtx) return;
+      const now = audioCtx.currentTime;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+
+      osc.type = isBass ? `triangle` : `sine`;
+      osc.frequency.setValueAtTime(freq, now);
+
+      gain.gain.setValueAtTime(0.001, now);
+      gain.gain.linearRampToValueAtTime(isBass ? 0.18 : 0.11, now + 0.015);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + (isBass ? 0.48 : 0.34));
+
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+
+      osc.start(now);
+      osc.stop(now + 0.52);
+    }
+
+    function highlightBeat(beatNumber) {
+      for (let i = 1; i <= 3; i++) {
+        const cell = document.getElementById(`beat-` + i);
+        if (cell) {
+          if (i === beatNumber) cell.classList.add(`is-active`);
+          else cell.classList.remove(`is-active`);
+        }
+      }
+    }
+
+    function stepPasilloPattern() {
+      const chords = [
+        [220.0, 329.63, 440.0],
+        [220.0, 329.63, 440.0],
+        [146.83, 349.23, 440.0],
+        [164.81, 329.63, 415.3]
+      ];
+      const barIdx = Math.floor(pasilloStep / 3) % chords.length;
+      const beatIdx = pasilloStep % 3;
+      const freq = chords[barIdx][beatIdx];
+
+      playPluckNote(freq, beatIdx === 0);
+      highlightBeat(beatIdx + 1);
+      pasilloStep += 1;
+    }
+
+    function startPasilloLoop() {
+      if (pasilloTimer) clearInterval(pasilloTimer);
+      const intervalMs = Math.round((60 / pasilloBpm) * 1000);
+      stepPasilloPattern();
+      pasilloTimer = setInterval(stepPasilloPattern, intervalMs);
+    }
+
+    function togglePasilloAudio() {
+      const btn = document.getElementById(`pasillo-toggle`);
+      const status = document.getElementById(`pasillo-status`);
+      if (!btn || !status) return;
+
+      if (!pasilloPlaying) {
+        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContextClass) {
+          status.textContent = `Audio no disponible`;
+          return;
+        }
+        if (!audioCtx) {
+          audioCtx = new AudioContextClass();
+        }
+        if (audioCtx.state === `suspended`) {
+          audioCtx.resume();
+        }
+        pasilloPlaying = true;
+        pasilloStep = 0;
+        btn.setAttribute(`aria-pressed`, `true`);
+        btn.textContent = `Detener compás`;
+        status.textContent = `Reproduciendo 3/4`;
+        startPasilloLoop();
+      } else {
+        pasilloPlaying = false;
+        if (pasilloTimer) {
+          clearInterval(pasilloTimer);
+          pasilloTimer = null;
+        }
+        highlightBeat(0);
+        btn.setAttribute(`aria-pressed`, `false`);
+        btn.textContent = `Escuchar compás 3/4`;
+        status.textContent = `En pausa`;
+      }
+    }
+
+    function updatePasilloTempo(val) {
+      const num = parseInt(val, 10);
+      if (isNaN(num)) return;
+      pasilloBpm = num;
+      const label = document.getElementById(`pasillo-tempo-val`);
+      if (label) label.textContent = String(num);
+      if (pasilloPlaying) {
+        startPasilloLoop();
+      }
+    }
+
+    function initScrollReveals() {
+      const elements = document.querySelectorAll(`.reveal-on-scroll`);
+      if (!(`IntersectionObserver` in window)) {
+        elements.forEach(function(el) { el.classList.add(`is-visible`); });
+        return;
+      }
+      const observer = new IntersectionObserver(function(entries, obs) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add(`is-visible`);
+            obs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+
+      elements.forEach(function(el) {
+        observer.observe(el);
+      });
+    }
+
+    document.addEventListener(`DOMContentLoaded`, function() {
+      selectEconomyItem(`encebollado`);
+      selectTourismSpot(`penas`);
+      selectCuadraLens(`montubio`);
+      selectBalsaPart(`vela`);
+      selectTerritoryZone(`portuario`);
+      updateSynergy();
+      initScrollReveals();
+    });
+  </script>
+</body>
+</html>
